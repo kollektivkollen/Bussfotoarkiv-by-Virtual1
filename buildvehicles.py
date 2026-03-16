@@ -9,6 +9,11 @@ OPERATOR_RULES = {
         "aliases": ["nobina", "swebus"],
         "formerNames": ["Swebus"],
     },
+    "vr": {
+        "displayName": "Vr",
+        "aliases": ["vr", "arriva"],
+        "formerNames": ["Arriva"],
+    },
     "keolis": {
         "displayName": "Keolis",
         "aliases": ["keolis", "busslink"],
