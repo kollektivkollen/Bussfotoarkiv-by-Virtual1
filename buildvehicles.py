@@ -19,6 +19,11 @@ OPERATOR_RULES = {
         "aliases": ["transdev", "veolia", "connex", "linjebuss"],
         "formerNames": ["Veolia", "Connex", "Linjebuss"],
     },
+	"bergkvarabuss": {
+    	"displayName": "Bergkvarabuss",
+    	"aliases": ["bergkvarabuss", "bergkvara"],
+    	"formerNames": [],
+	},
 }
 
 IMAGE_EXTS = {".jpg", ".jpeg", ".png", ".webp", ".gif"}
