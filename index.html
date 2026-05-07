@@ -3,526 +3,26 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Fordonsfotoarkiv</title>
+  <title>BussFoto | Fordonsfotoarkiv</title>
   <style>
-    :root {
-      --bg: #0a101b;
-      --bg-2: #121c2e;
-      --panel: rgba(255,255,255,0.045);
-      --panel-2: rgba(255,255,255,0.065);
-      --line: rgba(255,255,255,0.09);
-      --text: #ecf3ff;
-      --muted: #9eb0cf;
-      --accent: #74b8ff;
-      --accent-2: #9ee7c9;
-      --warn: #8b93a8;
-      --shadow: 0 18px 46px rgba(0,0,0,.34);
-      --radius: 22px;
-      --radius-sm: 14px;
-      --slot-h: 98px;
-    }
-
-    * { box-sizing: border-box; }
-    html, body {
-      margin: 0;
-      min-height: 100%;
-      background:
-        radial-gradient(circle at top right, rgba(116,184,255,.10), transparent 26%),
-        radial-gradient(circle at left top, rgba(158,231,201,.08), transparent 18%),
-        var(--bg);
-      color: var(--text);
-      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    }
-
-    a { color: inherit; text-decoration: none; }
-    button, input, select { font: inherit; }
-
-    .shell {
-      width: min(1560px, calc(100% - 24px));
-      margin: 18px auto 32px;
-    }
-
-    .hero {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 16px;
-      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.025));
-      border: 1px solid var(--line);
-      border-radius: 28px;
-      box-shadow: var(--shadow);
-      padding: 18px;
-    }
-
-    .hero h1 {
-      margin: 0 0 6px;
-      font-size: clamp(24px, 4vw, 38px);
-      line-height: 1.08;
-      letter-spacing: -.03em;
-    }
-
-    .hero p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.5;
-    }
-
-    .stats {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      justify-content: flex-end;
-      align-content: start;
-    }
-
-    .pill {
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,.04);
-      color: var(--muted);
-      padding: 10px 12px;
-      border-radius: 999px;
-      font-size: 13px;
-      white-space: nowrap;
-    }
-
-    .toolbar {
-      display: grid;
-      grid-template-columns: 1.1fr .75fr .75fr auto;
-      gap: 10px;
-      margin-top: 16px;
-    }
-
-    .input, .select, .btn {
-      min-height: 48px;
-      border-radius: 14px;
-      border: 1px solid var(--line);
-      color: var(--text);
-    }
-
-    .input, .select {
-      background: rgba(255,255,255,.045);
-      padding: 12px 14px;
-      outline: none;
-      color: var(--text);
-    }
-
-    select {
-      color: #ffffff;
-      background-color: #1a2436;
-    }
-
-    select option {
-      color: #000000;
-      background: #ffffff;
-    }
-
-    .input::placeholder { color: #8fa0c1; }
-
-    .btn {
-      background: linear-gradient(180deg, rgba(116,184,255,.18), rgba(116,184,255,.10));
-      cursor: pointer;
-      padding: 0 18px;
-    }
-
-    .btn:hover { border-color: rgba(116,184,255,.45); }
-
-    .panel {
-      background: rgba(255,255,255,.03);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
-
-    .breadcrumbs {
-      margin: 14px 0 18px;
-      padding: 12px 14px;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 8px;
-      color: var(--muted);
-    }
-
-    .crumb {
-      border: 1px solid var(--line);
-      padding: 7px 12px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.035);
-    }
-
-    .crumb.active {
-      color: var(--text);
-      border-color: rgba(116,184,255,.35);
-    }
-
-    .page-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: end;
-      gap: 14px;
-      margin-bottom: 14px;
-    }
-
-    .page-head h2 {
-      margin: 0 0 4px;
-      font-size: clamp(22px, 3vw, 30px);
-      letter-spacing: -.02em;
-    }
-
-    .subtle {
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.45;
-    }
-
-    .section-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 14px;
-    }
-
-    .card {
-      border: 1px solid var(--line);
-      border-radius: 20px;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)),
-        var(--bg-2);
-      min-height: 152px;
-      padding: 16px;
-      transition: transform .12s ease, border-color .12s ease;
-      cursor: pointer;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .card:hover {
-      transform: translateY(-2px);
-      border-color: rgba(116,184,255,.36);
-    }
-
-    .eyebrow {
-      color: var(--accent-2);
-      text-transform: uppercase;
-      letter-spacing: .14em;
-      font-size: 12px;
-      margin-bottom: 10px;
-    }
-
-    .card h3 {
-      margin: 0 0 8px;
-      font-size: 24px;
-      letter-spacing: -.02em;
-    }
-
-    .card p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.45;
-    }
-
-    .badge-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 14px;
-    }
-
-    .badge {
-      font-size: 12px;
-      color: var(--text);
-      background: rgba(116,184,255,.12);
-      border: 1px solid rgba(116,184,255,.2);
-      border-radius: 999px;
-      padding: 6px 9px;
-    }
-
-    .alias {
-      margin-top: 8px;
-      color: #c8d3ea;
-      font-size: 13px;
-      line-height: 1.45;
-    }
-
-    .grid-wrap {
-      padding: 14px;
-    }
-
-    .hundred-grid {
-      display: grid;
-      grid-template-columns: repeat(10, minmax(0, 1fr));
-      gap: 8px;
-    }
-
-    .slot {
-      position: relative;
-      min-height: var(--slot-h);
-      border-radius: 12px;
-      overflow: hidden;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,.04);
-      cursor: pointer;
-      transition: transform .12s ease, border-color .12s ease;
-      appearance: none;
-      -webkit-appearance: none;
-    }
-
-    .slot:hover {
-      transform: translateY(-1px);
-      border-color: rgba(116,184,255,.36);
-    }
-
-    .slot img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      background: #0b111c;
-    }
-
-    .slot .overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, rgba(0,0,0,.05), rgba(0,0,0,.42));
-      pointer-events: none;
-    }
-
-    .slot-top {
-      position: absolute;
-      inset: 6px 6px auto 6px;
-      display: flex;
-      justify-content: space-between;
-      gap: 6px;
-      pointer-events: none;
-    }
-
-    .chip {
-      background: rgba(6,12,22,.74);
-      border: 1px solid rgba(255,255,255,.10);
-      color: white;
-      border-radius: 999px;
-      padding: 4px 8px;
-      font-size: 11px;
-      backdrop-filter: blur(4px);
-    }
-
-    .missing {
-      background: linear-gradient(135deg, rgba(255,255,255,.025), rgba(255,255,255,.05));
-      cursor: default;
-    }
-
-    .missing:hover {
-      transform: none;
-      border-color: var(--line);
-    }
-
-    .slot-center {
-      position: absolute;
-      inset: 0;
-      display: grid;
-      place-items: center;
-      text-align: center;
-      padding: 8px;
-      color: #8ea1c5;
-      font-size: 13px;
-      line-height: 1.3;
-    }
-
-    .slot-footer {
-      position: absolute;
-      inset: auto 6px 6px 6px;
-      text-align: center;
-    }
-
-    .results-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-      gap: 14px;
-    }
-
-    .photo-card {
-      overflow: hidden;
-      border-radius: 18px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,.03);
-      cursor: pointer;
-    }
-
-    .photo-card img {
-      width: 100%;
-      aspect-ratio: 16 / 10;
-      display: block;
-      object-fit: cover;
-      background: #0c1018;
-    }
-
-    .photo-meta {
-      padding: 12px 13px 14px;
-    }
-
-    .photo-meta h3 {
-      margin: 0 0 5px;
-      font-size: 17px;
-      line-height: 1.25;
-    }
-
-    .photo-meta p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.45;
-    }
-
-    .split-stack {
-      display: grid;
-      gap: 22px;
-    }
-
-    .section-block h3 {
-      margin: 0 0 10px;
-      font-size: 18px;
-      letter-spacing: -.01em;
-    }
-
-    .section-block .subtle {
-      margin-bottom: 12px;
-    }
-
-    .empty {
-      padding: 28px 18px;
-      text-align: center;
-      color: var(--muted);
-      font-size: 15px;
-    }
-
-    .lightbox {
-      position: fixed;
-      inset: 0;
-      background: rgba(4,8,16,.88);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 2000;
-      padding: 18px;
-    }
-
-    .lightbox.open { display: flex; }
-
-    .lightbox-inner {
-      width: min(1380px, 100%);
-      max-height: calc(100vh - 36px);
-      display: grid;
-      grid-template-rows: auto 1fr auto;
-      gap: 10px;
-      background: rgba(10,16,27,.94);
-      border: 1px solid var(--line);
-      border-radius: 24px;
-      box-shadow: var(--shadow);
-      padding: 14px;
-    }
-
-    .lightbox-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .lightbox-head h3 {
-      margin: 0;
-      font-size: 20px;
-      line-height: 1.2;
-    }
-
-    .lightbox-sub {
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.45;
-      margin-top: 4px;
-    }
-
-    .icon-btn {
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,.05);
-      color: var(--text);
-      border-radius: 12px;
-      padding: 10px 12px;
-      cursor: pointer;
-    }
-
-    .lightbox-view {
-      display: grid;
-      place-items: center;
-      min-height: 220px;
-      background: rgba(255,255,255,.025);
-      border-radius: 18px;
-      overflow: hidden;
-    }
-
-    .lightbox-view img {
-      display: block;
-      max-width: 100%;
-      max-height: calc(100vh - 240px);
-      object-fit: contain;
-    }
-
-    .thumb-strip {
-      display: flex;
-      gap: 8px;
-      overflow: auto;
-      padding-bottom: 2px;
-    }
-
-    .thumb-strip button {
-      flex: 0 0 auto;
-      width: 110px;
-      height: 72px;
-      border-radius: 12px;
-      overflow: hidden;
-      border: 1px solid var(--line);
-      padding: 0;
-      background: #09111d;
-      cursor: pointer;
-      appearance: none;
-      -webkit-appearance: none;
-    }
-
-    .thumb-strip button.active { border-color: rgba(116,184,255,.58); }
-    .thumb-strip img { width: 100%; height: 100%; object-fit: cover; display: block; }
-
-    .footer-note {
-      margin-top: 18px;
-      color: var(--muted);
-      font-size: 13px;
-      text-align: center;
-    }
-
-    @media (max-width: 1100px) {
-      .hero { grid-template-columns: 1fr; }
-      .stats { justify-content: flex-start; }
-      .hundred-grid { grid-template-columns: repeat(8, minmax(0, 1fr)); }
-    }
-
-    @media (max-width: 860px) {
-      .toolbar { grid-template-columns: 1fr; }
-      .hundred-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
-    }
-
-    @media (max-width: 640px) {
-      .shell { width: min(100% - 14px, 1560px); }
-      .hero { border-radius: 18px; padding: 14px; }
-      .page-head { flex-direction: column; align-items: start; }
-      .hundred-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 7px; }
-      :root { --slot-h: 104px; }
-
-      .lightbox-head {
-        flex-direction: column;
-        align-items: stretch;
-      }
-    }
+    :root{
+      --bg:#020712;--bg-2:#07101e;--panel:rgba(8,18,33,.78);--panel-2:rgba(12,28,50,.82);
+      --line:rgba(129,216,255,.18);--line-strong:rgba(10,167,255,.45);--text:#f7fbff;--muted:#a8b8ca;
+      --accent:#0aa7ff;--accent-2:#68df35;--warn:#ffc400;--red:#ff3d30;
+      --shadow:0 30px 80px rgba(0,0,0,.55),0 0 55px rgba(0,145,255,.12);--radius:22px;--radius-sm:14px;--slot-h:108px;
+    }
+    *{box-sizing:border-box}html{scroll-behavior:smooth}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}body{overflow-x:hidden}body:before{content:"";position:fixed;inset:0;z-index:-4;background:radial-gradient(circle at 18% 14%,rgba(0,178,255,.18),transparent 32%),radial-gradient(circle at 82% 42%,rgba(104,223,53,.10),transparent 32%),linear-gradient(180deg,#020712 0%,#04101d 58%,#020712 100%)}body:after{content:"";position:fixed;inset:0;z-index:-3;pointer-events:none;background:linear-gradient(rgba(0,183,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(0,183,255,.03) 1px,transparent 1px);background-size:56px 56px;mask-image:linear-gradient(to bottom,transparent 0%,#000 16%,#000 72%,transparent 100%);transform:perspective(820px) rotateX(62deg) translateY(18%);animation:drift 20s linear infinite}@keyframes drift{to{background-position:56px 56px}}@keyframes pulse{0%,100%{opacity:.65;transform:scale(1)}50%{opacity:1;transform:scale(1.06)}}@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+    a{color:inherit;text-decoration:none}button,input,select{font:inherit}.shell{width:min(1500px,calc(100% - 48px));margin:0 auto 34px}.topbar{height:92px;display:flex;align-items:center;justify-content:space-between;gap:22px;border-bottom:1px solid rgba(124,209,255,.13);background:rgba(2,7,18,.68);backdrop-filter:blur(22px);position:sticky;top:0;z-index:40;padding:0 24px;margin:0 auto 0;width:100%}.topbrand{display:flex;align-items:center;gap:14px}.topbrand img{height:62px;max-width:240px;object-fit:contain;filter:drop-shadow(0 0 16px rgba(10,167,255,.32))}.topbrand strong{font-size:1rem;letter-spacing:.08em;text-transform:uppercase}.toplinks{display:flex;gap:18px;align-items:center}.toplinks a{font-weight:800;color:#d9e8f7;padding:11px 6px;border-bottom:2px solid transparent}.toplinks a:hover{color:#fff;border-color:var(--accent)}
+    .hero{position:relative;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:22px;align-items:end;margin:0 auto 18px;min-height:470px;padding:64px 38px 30px;border:1px solid var(--line);border-top:0;border-radius:0 0 28px 28px;box-shadow:var(--shadow);overflow:hidden;background:linear-gradient(90deg,rgba(2,7,18,.95) 0%,rgba(2,7,18,.78) 36%,rgba(2,7,18,.25) 67%,rgba(2,7,18,.62) 100%),linear-gradient(180deg,rgba(2,7,18,.05),#020712 96%),url('assets/bussfoto-hero-neon.png') center right/cover no-repeat}.hero:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 72% 45%,transparent 0 22%,rgba(0,183,255,.08) 23%,transparent 32%),repeating-linear-gradient(0deg,rgba(255,255,255,.025) 0 1px,transparent 1px 4px);pointer-events:none}.hero>div{position:relative;z-index:1}.hero h1{margin:0 0 12px;font-size:clamp(3.1rem,6.7vw,5.7rem);line-height:.93;letter-spacing:-.07em;text-shadow:0 12px 45px rgba(0,0,0,.58)}.hero h1:after{content:" på hjul.";display:block;color:var(--accent-2);text-shadow:0 0 24px rgba(104,223,53,.25)}.hero p{margin:0;color:#cfdae7;font-size:1.12rem;line-height:1.62;max-width:58ch}.hero p:before{content:"BussFoto ";color:var(--accent);font-weight:900}.stats{position:relative;z-index:1;display:flex;flex-wrap:wrap;gap:10px;justify-content:flex-end;align-content:start;max-width:520px}.pill{border:1px solid var(--line);background:rgba(5,16,30,.68);backdrop-filter:blur(12px);color:#d8e8f8;padding:10px 13px;border-radius:999px;font-size:13px;white-space:nowrap;box-shadow:0 0 30px rgba(0,154,255,.10)}.pill strong{color:var(--accent-2)}
+    .toolbar{grid-column:1/-1;display:grid;grid-template-columns:minmax(260px,1.1fr) .75fr .75fr auto;gap:10px;margin-top:28px;position:relative;z-index:1}.input,.select,.btn{min-height:52px;border-radius:14px;border:1px solid var(--line);color:var(--text)}.input,.select{background:rgba(4,12,22,.68);backdrop-filter:blur(14px);padding:13px 15px;outline:none}.input:focus,.select:focus{border-color:var(--line-strong);box-shadow:0 0 0 3px rgba(10,167,255,.10)}select{color:#fff;background-color:#101d31}select option{color:#000;background:#fff}.input::placeholder{color:#8fa0c1}.btn{background:linear-gradient(135deg,#078cff,#0e61ff);color:white;cursor:pointer;padding:0 22px;font-weight:900;box-shadow:0 18px 42px rgba(0,115,255,.24)}.btn:hover{border-color:rgba(116,184,255,.60);transform:translateY(-1px)}
+    .panel{background:rgba(8,18,33,.72);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}.breadcrumbs{margin:14px auto 20px;padding:12px 14px;display:flex;flex-wrap:wrap;align-items:center;gap:8px;color:var(--muted)}.crumb{border:1px solid var(--line);padding:7px 12px;border-radius:999px;background:rgba(255,255,255,.035)}.crumb.active{color:var(--text);border-color:rgba(10,167,255,.55);box-shadow:0 0 18px rgba(10,167,255,.12)}.page-head{display:flex;justify-content:space-between;align-items:end;gap:14px;margin:0 0 16px}.page-head h2{margin:0 0 4px;font-size:clamp(2rem,3vw,3.1rem);line-height:1;letter-spacing:-.055em}.subtle{color:var(--muted);font-size:14px;line-height:1.55}.section-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}.card{position:relative;border:1px solid var(--line);border-radius:20px;background:radial-gradient(circle at 18% 0%,rgba(10,167,255,.12),transparent 34%),linear-gradient(180deg,rgba(9,22,39,.88),rgba(5,12,24,.84));min-height:164px;padding:19px;transition:.18s ease;cursor:pointer;overflow:hidden;box-shadow:var(--shadow)}.card:before{content:"";position:absolute;inset:auto 0 0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent-2));box-shadow:0 0 18px var(--accent)}.card:hover{transform:translateY(-6px);border-color:rgba(10,167,255,.48);box-shadow:0 35px 85px rgba(0,0,0,.62),0 0 46px rgba(10,167,255,.14)}.eyebrow{color:var(--accent-2);text-transform:uppercase;letter-spacing:.14em;font-size:12px;font-weight:900;margin-bottom:10px}.card h3{margin:0 0 9px;font-size:2rem;letter-spacing:-.04em}.card p{margin:0;color:#d6deea;font-size:14px;line-height:1.48}.badge-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:15px}.badge{font-size:12px;color:var(--text);background:rgba(116,184,255,.12);border:1px solid rgba(116,184,255,.2);border-radius:999px;padding:6px 9px}.alias{margin-top:8px;color:#c8d3ea;font-size:13px;line-height:1.45}.letter-card h3{font-size:3.2rem;color:var(--accent);text-shadow:0 0 24px rgba(10,167,255,.25)}
+    .grid-wrap{padding:14px}.hundred-grid{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:8px}.slot{position:relative;min-height:var(--slot-h);border-radius:12px;overflow:hidden;border:1px solid var(--line);background:rgba(255,255,255,.04);cursor:pointer;transition:.12s ease;appearance:none;-webkit-appearance:none}.slot:hover{transform:translateY(-2px);border-color:rgba(10,167,255,.44);box-shadow:0 0 22px rgba(10,167,255,.12)}.slot img{width:100%;height:100%;object-fit:cover;display:block;background:#0b111c}.slot .overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.04),rgba(0,0,0,.48));pointer-events:none}.slot-top{position:absolute;inset:6px 6px auto 6px;display:flex;justify-content:space-between;gap:6px;pointer-events:none}.chip{background:rgba(6,12,22,.74);border:1px solid rgba(255,255,255,.12);color:white;border-radius:999px;padding:4px 8px;font-size:11px;backdrop-filter:blur(4px)}.missing{background:linear-gradient(135deg,rgba(255,255,255,.025),rgba(255,255,255,.05));cursor:default}.missing:hover{transform:none;border-color:var(--line);box-shadow:none}.slot-center{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:8px;color:#8ea1c5;font-size:13px;line-height:1.3}.slot-footer{position:absolute;inset:auto 6px 6px 6px;text-align:center}.results-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}.photo-card{overflow:hidden;border-radius:18px;border:1px solid var(--line);background:rgba(8,18,33,.72);cursor:pointer;transition:.18s;box-shadow:var(--shadow)}.photo-card:hover{transform:translateY(-5px);border-color:rgba(10,167,255,.48)}.photo-card img{width:100%;aspect-ratio:16/10;display:block;object-fit:cover;background:#0c1018}.photo-meta{padding:12px 13px 14px}.photo-meta h3{margin:0 0 5px;font-size:17px;line-height:1.25}.photo-meta p{margin:0;color:var(--muted);font-size:13px;line-height:1.45}.split-stack{display:grid;gap:22px}.section-block h3{margin:0 0 10px;font-size:18px}.section-block .subtle{margin-bottom:12px}.empty{padding:28px 18px;text-align:center;color:var(--muted);font-size:15px}
+    .lightbox{position:fixed;inset:0;background:rgba(4,8,16,.90);display:none;align-items:center;justify-content:center;z-index:2000;padding:18px}.lightbox.open{display:flex}.lightbox-inner{width:min(1460px,100%);max-height:calc(100vh - 36px);display:grid;grid-template-rows:auto 1fr auto;gap:10px;background:rgba(5,13,25,.96);border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow);padding:14px}.lightbox-head{display:flex;justify-content:space-between;align-items:center;gap:12px}.lightbox-head h3{margin:0;font-size:20px;line-height:1.2}.lightbox-sub{color:var(--muted);font-size:13px;line-height:1.45;margin-top:4px}.icon-btn{border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--text);border-radius:12px;padding:10px 12px;cursor:pointer}.lightbox-view{display:grid;place-items:center;min-height:220px;background:rgba(255,255,255,.025);border-radius:18px;overflow:hidden}.lightbox-view img{display:block;max-width:100%;max-height:calc(100vh - 240px);object-fit:contain}.thumb-strip{display:flex;gap:8px;overflow:auto;padding-bottom:2px}.thumb-strip button{flex:0 0 auto;width:110px;height:72px;border-radius:12px;overflow:hidden;border:1px solid var(--line);padding:0;background:#09111d;cursor:pointer;appearance:none;-webkit-appearance:none}.thumb-strip button.active{border-color:rgba(116,184,255,.58)}.thumb-strip img{width:100%;height:100%;object-fit:cover;display:block}.footer-note{margin:22px auto 18px;color:var(--muted);font-size:13px;text-align:center}.footer-note strong{color:#dbeaff}
+    @media(max-width:1100px){.hero{grid-template-columns:1fr}.stats{justify-content:flex-start}.hundred-grid{grid-template-columns:repeat(8,minmax(0,1fr))}.toplinks{display:none}}@media(max-width:860px){.toolbar{grid-template-columns:1fr}.hundred-grid{grid-template-columns:repeat(5,minmax(0,1fr))}.hero{min-height:540px;background-position:62% center}}@media(max-width:640px){.shell{width:min(100% - 20px,1560px)}.topbar{height:76px;padding:0 14px}.topbrand img{height:50px;max-width:200px}.hero{padding:45px 18px 22px;border-radius:0 0 20px 20px}.page-head{flex-direction:column;align-items:start}.hundred-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}:root{--slot-h:104px}.lightbox-head{flex-direction:column;align-items:stretch}}
   </style>
 </head>
 <body>
+  <header class="topbar"><a class="topbrand" href="#view=home" aria-label="BussFoto startsida"><img src="assets/bussfoto-logo.png" alt="BussFoto"><strong>Fordonsfotoarkiv</strong></a><nav class="toplinks"><a href="#view=home">Start</a><a href="#view=category&category=bus">Bussar</a><a href="#view=category&category=train">Pendeltåg</a><a href="#view=category&category=tram">Spårvagnar</a><a href="mailto:admin@bussfoto.se">Kontakt</a></nav></header>
   <div class="shell">
     <section class="hero">
       <div>
@@ -573,7 +73,7 @@
   <script>
 const CONFIG = {
   siteTitle: 'Fordonsfotoarkiv',
-  siteSubtitle: 'Bussar, pendeltåg och spårvagnar i ett sökbart arkiv. Bussar sorteras på operatör, järnvägsfordon på fordonstyp.',
+  siteSubtitle: 'Bussar, pendeltåg och spårvagnar i ett sökbart arkiv. Bussar sorteras på bokstav, operatör, fordonstyp och nummer.'
   vehiclesUrl: './data/vehicles.json',
   imagesBaseUrl: 'https://pub-ea261f97af5143c68f0186c703fc0ed6.r2.dev/images/',
   thumbsBaseUrl: 'https://pub-ea261f97af5143c68f0186c703fc0ed6.r2.dev/thumbs/'
@@ -607,6 +107,7 @@ console.log('TEST buildImageUrl =', CONFIG.imagesBaseUrl.replace(/\/$/, '') + '/
       currentView: 'home',
       category: '',
       group: '',
+      letter: '',
       variant: '',
       thousand: null,
       hundred: null,
@@ -887,6 +388,7 @@ console.log('TEST buildImageUrl =', CONFIG.imagesBaseUrl.replace(/\/$/, '') + '/
       params.set('view', view);
       if (extra.category) params.set('category', extra.category);
       if (extra.group) params.set('group', extra.group);
+      if (extra.letter) params.set('letter', extra.letter);
       if ('variant' in extra) params.set('variant', extra.variant || '');
       if (extra.thousand != null) params.set('thousand', extra.thousand);
       if (extra.hundred != null) params.set('hundred', extra.hundred);
@@ -899,6 +401,7 @@ console.log('TEST buildImageUrl =', CONFIG.imagesBaseUrl.replace(/\/$/, '') + '/
       state.currentView = params.get('view') || 'home';
       state.category = params.get('category') || '';
       state.group = params.get('group') || '';
+      state.letter = params.get('letter') || '';
       state.variant = params.get('variant') || '';
       state.thousand = params.get('thousand') ? Number(params.get('thousand')) : null;
       state.hundred = params.get('hundred') ? Number(params.get('hundred')) : null;
@@ -909,6 +412,31 @@ console.log('TEST buildImageUrl =', CONFIG.imagesBaseUrl.replace(/\/$/, '') + '/
       renderSubFilter();
     }
 
+
+    function firstArchiveLetter(label) {
+      const clean = String(label || '').trim().toLocaleUpperCase('sv-SE');
+      const first = clean.charAt(0) || '#';
+      return /^[A-ZÅÄÖ]$/u.test(first) ? first : '#';
+    }
+
+    function getBusLetterRows() {
+      const map = new Map();
+      getSubOptions('bus').forEach(opt => {
+        const letter = firstArchiveLetter(opt.label);
+        if (!map.has(letter)) map.set(letter, { letter, operatorCount: 0, vehicleCount: 0 });
+        const row = map.get(letter);
+        row.operatorCount += 1;
+        row.vehicleCount += opt.count;
+      });
+      return [...map.values()].sort((a, b) => a.letter.localeCompare(b.letter, 'sv'));
+    }
+
+    function getBusOperatorsForLetter(letter) {
+      return getSubOptions('bus')
+        .filter(opt => firstArchiveLetter(opt.label) === letter)
+        .sort((a, b) => a.label.localeCompare(b.label, 'sv'));
+    }
+
     function renderBreadcrumbs() {
       const parts = [`<a class="crumb ${state.currentView === 'home' ? 'active' : ''}" href="#view=home">Start</a>`];
 
@@ -917,11 +445,15 @@ console.log('TEST buildImageUrl =', CONFIG.imagesBaseUrl.replace(/\/$/, '') + '/
         parts.push(`<a class="crumb ${state.currentView === 'category' ? 'active' : ''}" href="#view=category&category=${encodeURIComponent(state.category)}">${esc(label)}</a>`);
       }
 
+      if (state.category === 'bus' && state.letter) {
+        parts.push(`<a class="crumb ${state.currentView === 'letter' ? 'active' : ''}" href="#view=letter&category=bus&letter=${encodeURIComponent(state.letter)}">${esc(state.letter)}</a>`);
+      }
+
       if (state.group) {
         const subOptions = getSubOptions(state.category);
         const match = subOptions.find(o => o.key === state.group);
         if (match) {
-          parts.push(`<a class="crumb ${state.currentView === 'group' ? 'active' : ''}" href="#view=group&category=${encodeURIComponent(state.category)}&group=${encodeURIComponent(state.group)}">${esc(match.label)}</a>`);
+          parts.push(`<a class="crumb ${state.currentView === 'group' ? 'active' : ''}" href="#view=group&category=${encodeURIComponent(state.category)}${state.category === 'bus' && state.letter ? `&letter=${encodeURIComponent(state.letter)}` : ''}&group=${encodeURIComponent(state.group)}">${esc(match.label)}</a>`);
         }
       }
 
@@ -989,7 +521,7 @@ console.log('TEST buildImageUrl =', CONFIG.imagesBaseUrl.replace(/\/$/, '') + '/
 
     function renderHome() {
       const categories = [
-        { key: 'bus', title: 'Bussar', desc: 'Operatör först, sedan undersidor, 1000-tal, 100-tal och grid med luckor.', count: vehiclesForCategory('bus').length },
+        { key: 'bus', title: 'Bussar', desc: 'Bokstavsmapp först, sedan operatör, undersidor, 1000-tal, 100-tal och grid med luckor.', count: vehiclesForCategory('bus').length },
         { key: 'train', title: 'Pendeltåg', desc: 'Sorteras på fordonstyp, exempelvis X1 och X11, sedan på nummer.', count: vehiclesForCategory('train').length },
         { key: 'tram', title: 'Spårvagnar', desc: 'Sorteras på fordonstyp, exempelvis A31 och M31, sedan på vagnsnummer.', count: vehiclesForCategory('tram').length }
       ];
@@ -1024,22 +556,80 @@ console.log('TEST buildImageUrl =', CONFIG.imagesBaseUrl.replace(/\/$/, '') + '/
       const title = categoryTitle(state.category);
       const options = getSubOptions(state.category);
 
+      if (state.category === 'bus') {
+        const letters = getBusLetterRows();
+        els.app.innerHTML = `
+          <section>
+            <div class="page-head">
+              <div>
+                <h2>Bussar</h2>
+                <div class="subtle">Välj första bokstaven i operatörens namn. Det håller arkivet städat även när depån växer.</div>
+              </div>
+              <div class="subtle">${options.reduce((sum, o) => sum + o.count, 0)} fordon · ${options.length} operatörer</div>
+            </div>
+            <div class="section-grid">
+              ${letters.map(row => `
+                <a class="card letter-card" href="#view=letter&category=bus&letter=${encodeURIComponent(row.letter)}">
+                  <div class="eyebrow">Bokstavsmapp</div>
+                  <h3>${esc(row.letter)}</h3>
+                  <p>${row.operatorCount} operatör${row.operatorCount === 1 ? '' : 'er'} · ${row.vehicleCount} fordon</p>
+                  <div class="badge-row"><span class="badge">Öppna ${esc(row.letter)}</span></div>
+                </a>
+              `).join('')}
+            </div>
+          </section>
+        `;
+        return;
+      }
+
       els.app.innerHTML = `
         <section>
           <div class="page-head">
             <div>
               <h2>${esc(title)}</h2>
-              <div class="subtle">${state.category === 'bus' ? 'Operatörerna visar även tidigare namn när de finns.' : 'Välj fordonstyp för att komma vidare till nummerserier.'}</div>
+              <div class="subtle">Välj fordonstyp för att komma vidare till nummerserier.</div>
             </div>
             <div class="subtle">${options.reduce((sum, o) => sum + o.count, 0)} fordon</div>
           </div>
           <div class="section-grid">
             ${options.map(opt => `
               <a class="card" href="#view=group&category=${encodeURIComponent(state.category)}&group=${encodeURIComponent(opt.key)}">
-                <div class="eyebrow">${state.category === 'bus' ? 'Operatör' : 'Fordonstyp'}</div>
+                <div class="eyebrow">Fordonstyp</div>
                 <h3>${esc(opt.label)}</h3>
-                <p>${state.category === 'bus' ? 'Bussarkiv med eventuella undersidor för äldre generationer.' : 'Översikt och nummerspann för denna fordonstyp.'}</p>
-                ${state.category === 'bus' && opt.formerNames?.length ? `<div class="alias">Tidigare: ${esc(opt.formerNames.join(', '))}</div>` : ''}
+                <p>Översikt och nummerspann för denna fordonstyp.</p>
+                <div class="badge-row">
+                  <span class="badge">${opt.count} fordon</span>
+                  <span class="badge">Visa</span>
+                </div>
+              </a>
+            `).join('')}
+          </div>
+        </section>
+      `;
+    }
+
+
+    function renderLetter() {
+      if (state.category !== 'bus' || !state.letter) return renderCategory();
+      const options = getBusOperatorsForLetter(state.letter);
+      if (!options.length) return renderCategory();
+
+      els.app.innerHTML = `
+        <section>
+          <div class="page-head">
+            <div>
+              <h2>Bussar · ${esc(state.letter)}</h2>
+              <div class="subtle">Operatörer i bokstavsmappen ${esc(state.letter)}. Tidigare namn visas när metadata finns.</div>
+            </div>
+            <div class="subtle">${options.reduce((sum, o) => sum + o.count, 0)} fordon · ${options.length} operatörer</div>
+          </div>
+          <div class="section-grid">
+            ${options.map(opt => `
+              <a class="card" href="#view=group&category=bus&letter=${encodeURIComponent(state.letter)}&group=${encodeURIComponent(opt.key)}">
+                <div class="eyebrow">Operatör</div>
+                <h3>${esc(opt.label)}</h3>
+                <p>Bussarkiv med eventuella undersidor för äldre generationer.</p>
+                ${opt.formerNames?.length ? `<div class="alias">Tidigare: ${esc(opt.formerNames.join(', '))}</div>` : ''}
                 <div class="badge-row">
                   <span class="badge">${opt.count} fordon</span>
                   <span class="badge">Visa</span>
@@ -1396,6 +986,7 @@ console.log('TEST buildImageUrl =', CONFIG.imagesBaseUrl.replace(/\/$/, '') + '/
 
       switch (state.currentView) {
         case 'category': return renderCategory();
+        case 'letter': return renderLetter();
         case 'group': return renderGroup();
         case 'variant': return renderVariant();
         case 'thousand': return renderThousand();
@@ -1613,6 +1204,7 @@ console.log('TEST buildImageUrl =', CONFIG.imagesBaseUrl.replace(/\/$/, '') + '/
       const value = els.categoryFilter.value;
       state.category = value;
       state.group = '';
+      state.letter = '';
       state.variant = '';
       if (!value) setHash('home');
       else setHash('category', { category: value });
@@ -1621,6 +1213,7 @@ console.log('TEST buildImageUrl =', CONFIG.imagesBaseUrl.replace(/\/$/, '') + '/
     els.subFilter.addEventListener('change', () => {
       const value = els.subFilter.value;
       state.group = value;
+      state.letter = '';
       state.variant = '';
       if (!state.category) return setHash('home');
       if (!value) return setHash('category', { category: state.category });
